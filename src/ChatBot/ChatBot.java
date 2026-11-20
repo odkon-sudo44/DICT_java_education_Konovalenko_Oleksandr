@@ -3,7 +3,7 @@ import java.util.Scanner;
 
 public class ChatBot {
 
-    static  final Scanner scanner = new Scanner(System.in);
+    static final Scanner scanner = new Scanner(System.in);
 
     static void main(String[] ignoredArgs) {
         String bot_name = "Hero";
@@ -29,9 +29,29 @@ public class ChatBot {
         System.out.println("Now I will prove to you that I can count to any number you want!");
         userInp = scanner.nextInt();
 
-        for(int i = 0; i <= userInp; i++) {
+        for (int i = 0; i <= userInp; i++) {
             System.out.printf("%d !\n", i);
         }
 
+        test();
+    }
+
+    static void test() {
+        System.out.println("Let's test your programming knowledge.");
+        System.out.println("What is the main purpose of a Docker container?");
+        System.out.println("1. To replace a physical computer's BIOS.");
+        System.out.println("2. To package an application and its dependencies into an isolated unit.");
+        System.out.println("3. To compile Java source code into bytecode.");
+        System.out.println("4. To manage relational databases exclusively.");
+
+        while (true) {
+            int answer = scanner.nextInt();
+            if (answer == 2) {
+                System.out.println("Congratulations, have a nice day!");
+                break;
+            } else {
+                System.out.println("Please, try again.");
+            }
+        }
     }
 }
