@@ -1,6 +1,8 @@
 package Hangman;
 
+import java.util.HashSet;
 import java.util.Scanner;
+import java.util.Set;
 
 public class hangman {
 
@@ -10,6 +12,7 @@ public class hangman {
         String[] words_to_guess = {"python", "java", "kotlin", "javascript"};
         String word_to_guess = words_to_guess[(int)(Math.random() * 4)];
         String hint = create_tip(word_to_guess);
+        Set<Character> guessed_letters = new HashSet<>();
         int attempts = 8;
 
         System.out.println("HANGMAN");
@@ -18,13 +21,29 @@ public class hangman {
             System.out.println();
             System.out.println(hint);
             System.out.print("Input a letter: ");
-            char letter = scanner.next().trim().charAt(0);
+            String input = scanner.nextLine();
+
+            if (input.length() != 1) {
+                System.out.println("You should input a single letter.");
+                continue;
+            }
+
+            char letter = input.charAt(0);
+
+            if (letter < 'a' || letter > 'z') {
+                System.out.println("Please enter a lowercase English letter.");
+                continue;
+            }
+
+            if (guessed_letters.contains(letter)) {
+                System.out.println("You've already guessed this letter.");
+                continue;
+            }
+
+            guessed_letters.add(letter);
 
             if (word_to_guess.indexOf(letter) == -1) {
                 System.out.println("That letter doesn't appear in the word.");
-                attempts--;
-            } else if (hint.indexOf(letter) != -1) {
-                System.out.println("No improvements.");
                 attempts--;
             } else {
                 hint = update_hint(hint, word_to_guess, letter);
