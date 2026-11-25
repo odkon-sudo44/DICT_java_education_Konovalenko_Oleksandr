@@ -10,13 +10,14 @@ public class hangman {
         String[] words_to_guess = {"python", "java", "kotlin" , "javascript"};
         String word_to_guess = words_to_guess[(int)(Math.random() * 4)];
         String word;
+        String hint = create_tip(word_to_guess);
         boolean is_game_running = true;
 
         System.out.println("HANGMAN");
 
         while(is_game_running) {
-            System.out.print("Guess the word:>");
-            word = scanner.next();
+            System.out.printf("Guess the word %s:>", hint);
+            word = scanner.next().trim();
 
             is_game_running = validateAnswer(word, word_to_guess);
         }
@@ -31,6 +32,10 @@ public class hangman {
             System.out.println("You lost!");
             return true;
         }
+    }
+
+    public static String create_tip (String word) {
+        return word.substring(0, 2) + "-".repeat(word.length() - 2);
     }
 
 }
