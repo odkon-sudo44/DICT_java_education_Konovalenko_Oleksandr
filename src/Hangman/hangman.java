@@ -6,36 +6,44 @@ public class hangman {
 
     static final Scanner scanner = new Scanner(System.in);
 
-    static void main(String[] ignoredArgs) {
-        String[] words_to_guess = {"python", "java", "kotlin" , "javascript"};
+    public static void main(String[] ignoredArgs) {
+        String[] words_to_guess = {"python", "java", "kotlin", "javascript"};
         String word_to_guess = words_to_guess[(int)(Math.random() * 4)];
-        String word;
         String hint = create_tip(word_to_guess);
-        boolean is_game_running = true;
+        int attempts = 8;
 
         System.out.println("HANGMAN");
 
-        while(is_game_running) {
-            System.out.printf("Guess the word %s:>", hint);
-            word = scanner.next().trim();
+        while (attempts > 0) {
+            System.out.println();
+            System.out.println(hint);
+            System.out.print("Input a letter: ");
+            char letter = scanner.next().trim().charAt(0);
 
-            is_game_running = validateAnswer(word, word_to_guess);
+            if (word_to_guess.indexOf(letter) != -1) {
+                hint = update_hint(hint, word_to_guess, letter);
+            } else {
+                System.out.println("That letter doesn't appear in the word.");
+                attempts--;
+            }
         }
 
+        System.out.println();
+        System.out.println("Thanks for playing!");
     }
 
-    public static boolean validateAnswer(String word_to_validate, String correct_answer) {
-        if(word_to_validate.contains(correct_answer)) {
-            System.out.println("You survived!");
-            return false;
-        } else {
-            System.out.println("You lost!");
-            return true;
+    public static String update_hint(String current_hint, String word_to_guess, char letter) {
+        char[] hint_chars = current_hint.toCharArray();
+        for (int i = 0; i < word_to_guess.length(); i++) {
+            if (word_to_guess.charAt(i) == letter) {
+                hint_chars[i] = letter;
+            }
         }
+        return new String(hint_chars);
     }
 
-    public static String create_tip (String word) {
-        return word.substring(0, 2) + "-".repeat(word.length() - 2);
+    public static String create_tip(String word) {
+        return "-".repeat(word.length());
     }
 
 }
