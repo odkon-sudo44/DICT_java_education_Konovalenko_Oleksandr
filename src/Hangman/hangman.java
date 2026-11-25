@@ -14,22 +14,30 @@ public class hangman {
 
         System.out.println("HANGMAN");
 
-        while (attempts > 0) {
+        while (attempts > 0 && !hint.equals(word_to_guess)) {
             System.out.println();
             System.out.println(hint);
             System.out.print("Input a letter: ");
             char letter = scanner.next().trim().charAt(0);
 
-            if (word_to_guess.indexOf(letter) != -1) {
-                hint = update_hint(hint, word_to_guess, letter);
-            } else {
+            if (word_to_guess.indexOf(letter) == -1) {
                 System.out.println("That letter doesn't appear in the word.");
                 attempts--;
+            } else if (hint.indexOf(letter) != -1) {
+                System.out.println("No improvements.");
+                attempts--;
+            } else {
+                hint = update_hint(hint, word_to_guess, letter);
             }
         }
 
         System.out.println();
-        System.out.println("Thanks for playing!");
+        if (hint.equals(word_to_guess)) {
+            System.out.println("You guessed the word " + word_to_guess + "!");
+            System.out.println("You survived!");
+        } else {
+            System.out.println("You lost!");
+        }
     }
 
     public static String update_hint(String current_hint, String word_to_guess, char letter) {
